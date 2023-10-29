@@ -1,5 +1,6 @@
 from uuid import uuid4
 
+
 class Store:
 
     _instances = []
@@ -42,8 +43,7 @@ class Store:
     @property
     def info(self):
         print(
-f"""
+            f"""
 Address: {self._address}
 Capacity: {self._capacity}
-ID: {self._id}
-""")
+ID: {self._id}""")

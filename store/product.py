@@ -6,7 +6,7 @@ class Product:
         self.name = name
         self.__price = price
         self.category = category
-        self.__id=id
+        self.__id = id
         Product._instances.append(self)
 
     @property

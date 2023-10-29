@@ -1,5 +1,6 @@
 from .store import Store
 
+
 class DataBase:
 
     def __init__(self, filename):
