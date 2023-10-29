@@ -6,6 +6,7 @@ class Product:
         self.name = name
         self.__price = price
         self.category = category
+        self.__id=id
         Product._instances.append(self)
 
     @property
@@ -24,4 +25,9 @@ class Product:
 
     @property
     def info(self):
-        pass
+        print(f"""
+Name: {self.name}
+Price: {self.__price}
+Category: {self.category}
+ID: {self.__id}
+""")

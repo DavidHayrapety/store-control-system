@@ -6,7 +6,9 @@ class DataBase:
         self._filename = filename
 
     def load_data(self):
-        pass # TODO: Read data from csv file and store in db
+        with open(self._filename) as file:
+            file.readline()
+            [Store(*el.strip().split(';')) for el in file]
 
     def save_data(self, stores, filename=None):
         pass

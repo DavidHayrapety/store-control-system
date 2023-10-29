@@ -41,4 +41,9 @@ class Store:
 
     @property
     def info(self):
-        pass
+        print(
+f"""
+Address: {self._address}
+Capacity: {self._capacity}
+ID: {self._id}
+""")
