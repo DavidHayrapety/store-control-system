@@ -1,4 +1,4 @@
-from store import Store
+from .store import Store
 
 
 class DataBase:
@@ -41,6 +41,6 @@ class DataBase:
                 for store in stores:
                     details=[]
                     for i in range(len(stores)):
-                        details.append(getattr(store,f'_{self._headers[i].lower()}'))
+                        details.append(getattr(store,self._headers[i].lower()))
                     line=';'.join(details)
                     file.write(line+'\n')

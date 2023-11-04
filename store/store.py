@@ -18,7 +18,23 @@ class Store:
     def free_quantity(self):
         used_quantity = sum(self._products.values())
         return self._capacity - used_quantity
+    
+    @property
+    def instances(self):
+        return self._instances
+    
+    @property
+    def address(self):
+        return self._address
+    
+    @property
+    def capacity(self):
+        return self._capacity
 
+    @property
+    def id(self):
+        return self._id
+    
     def add_product(self, product, quantity=1):
         if self.free_quantity < quantity:
             return False
@@ -41,7 +57,7 @@ class Store:
                 return store
 
     @property
-    def info(self):
+    def __str__(self):
         return (     
             f"Address: {self._address}\n"
             f"Capacity: {self._capacity}\n"

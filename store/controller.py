@@ -43,6 +43,21 @@ class Controller:
         target_type = self.__get_target_type()
         if action != 'CREATE':
             target = self.__get_target(target_type)
+            match action:
+                case "GET":
+                    return target
+                case "DELETE":
+                    match target_type:
+                        case "STORE":
+                            self.delete_store(target)
+                        case "PRODUCT":
+                            pass # TODO
+                case "UPDATE":
+                    match target_type:
+                        case "STORE":
+                            self.update_store(target)
+                        case "PRODUCT":
+                            pass# TODO
         else:
             if target_type == 'STORE':
                 self.create_store()
@@ -50,11 +65,11 @@ class Controller:
                 self.create_product()
         self.sync()
 
-    def get_store(self, id):
-        for i in Store._instances:
-            if i._id == id:
+    def get_store(self):
+        id = input("Enter the id of the store you want to get: ")
+        for i in self.stores:
+            if i.id == id:
                 return i
-        return False
 
     def create_store(self):
         address = input('Enter the address of the store: ')
@@ -65,30 +80,30 @@ class Controller:
                 break
         Store(address, capacity)
 
-    def update_store(self, id):
-        if not self.get_store(id):
-            return False
+    def update_store(self, store):
+        # id = input("Enter the id of the store you want to update: ")
+        if not self.get_store(store.id):
+            return
         while True:
             change = input(
                 'Enter the info which you want to update [address, capacity]: ').upper()
             if change in ("ADDRESS", "CAPACITY"):
-                store = self.get_store(id)
                 if change == 'ADDRESS':
-                    store._address = input(
+                    store.address = input(
                         "Enter a new address for the store: ")
                 else:
                     while True:
                         capacity = input('Enter a new capacity of the store: ')
                         if capacity.isdigit():
-                            store._capacity = int(capacity)
+                            store.capacity = int(capacity)
                             break
                 break
 
-    def delete_store(self, id):
-        for i, el in enumerate(Store._instances):
-            if el._id == id:
-                del Store._instances[i]
-        return False
+    def delete_store(self, store):
+        # id = input("Enter the id of the store you want to delete: ")
+        for i, el in enumerate(self.stores):
+            if el.id == store.id:
+                del self.stores[i]
 
     def get_product(self):
         pass
