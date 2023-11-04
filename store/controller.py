@@ -47,22 +47,23 @@ class Controller:
                 case "GET":
                     return target
                 case "DELETE":
-                    match target_type:
-                        case "STORE":
+                    match target_type.__name__:
+                        case Store.__name__:
                             self.delete_store(target)
-                        case "PRODUCT":
+                        case Product.__name__:
                             pass # TODO
                 case "UPDATE":
-                    match target_type:
-                        case "STORE":
+                    match target_type.__name__:
+                        case Store.__name__:
                             self.update_store(target)
-                        case "PRODUCT":
+                        case Product.__name__:
                             pass# TODO
         else:
-            if target_type == 'STORE':
+            if target_type.__name__ == Store.__name__:
                 self.create_store()
-            elif target_type == 'PRODUCT':
+            elif target_type.__name__ == Product.__name__:
                 self.create_product()
+        # TODO: do not implement syncronising
         self.sync()
 
     def get_store(self):

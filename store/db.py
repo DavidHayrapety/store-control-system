@@ -30,11 +30,14 @@ class DataBase:
 
     def save_data(self, stores, filename=None):
         if filename==None:
-            with open(self._filename) as file:
+            with open(self._filename, 'w') as file:
+                file.write(';'.join(self._headers)+'\n')
                 for store in stores:
-                    details = [getattr(store,h) for h in self._headers]
+                    details=[]
+                    for i in range(len(stores)):
+                        details.append(getattr(store,self._headers[i].lower()))
                     line=';'.join(details)
-                    file.writelines(line)
+                    file.write(line+'\n')
         else:
             with open(filename, 'w') as file:
                 file.write(';'.join(self._headers)+'\n')
