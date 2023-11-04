@@ -1,3 +1,6 @@
+from uuid import uuid4
+
+
 class Product:
 
     _instances = []
@@ -6,7 +9,9 @@ class Product:
         self.name = name
         self.__price = price
         self.category = category
-        self.__id = id
+        if id is None:
+            id = uuid4()
+        self._id = id
         Product._instances.append(self)
 
     @property
@@ -25,9 +30,9 @@ class Product:
 
     @property
     def info(self):
-        print(f"""
-Name: {self.name}
-Price: {self.__price}
-Category: {self.category}
-ID: {self.__id}
-""")
+        return (     
+            f"Name: {self.name}\n"
+            f"Price: {self.__price}\n"
+            f"Category: {self.category}\n"
+            f"ID: {self.__id}\n"
+            )

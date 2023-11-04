@@ -42,8 +42,8 @@ class Store:
 
     @property
     def info(self):
-        print(
-            f"""
-Address: {self._address}
-Capacity: {self._capacity}
-ID: {self._id}""")
+        return (     
+            f"Address: {self._address}\n"
+            f"Capacity: {self._capacity}\n"
+            f"ID: {self._id}\n"
+            )

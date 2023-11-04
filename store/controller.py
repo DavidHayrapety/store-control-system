@@ -7,7 +7,7 @@ class Controller:
 
     def __init__(self, archive):
         self.db = DataBase(archive)
-        self.stores = self.db.load_data()
+        self.stores = self.db.create_stores()
 
     def sync(self):
         self.db.save_data(self.stores)
@@ -63,11 +63,7 @@ class Controller:
             if capacity.isdigit():
                 capacity = int(capacity)
                 break
-        id = input(
-            'Enter the ID of the store (press enter if you do not want to write the ID): ')
-        if id == '\n':
-            id = None
-        Store(address, capacity, id)
+        Store(address, capacity)
 
     def update_store(self, id):
         if not self.get_store(id):
