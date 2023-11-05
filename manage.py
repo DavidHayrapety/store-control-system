@@ -3,7 +3,7 @@ from store import Controller
 
 archive = argv[1]
 
-ctl = Controller(archive)
+ctrl = Controller(archive)
 
 while True:
-    ctl.get_command()
+    ctrl.get_command()

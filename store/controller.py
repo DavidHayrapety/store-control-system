@@ -10,7 +10,7 @@ class Controller:
         self.stores = self.db.create_stores()
 
     def sync(self):
-        self.db.save_data(self.stores)
+        self.db.save_data(self.stores,"example.csv")
 
     def __get_action(self):
         while True:
@@ -45,45 +45,46 @@ class Controller:
             target = self.__get_target(target_type)
             match action:
                 case "GET":
-                    return target
+                    print(target.__str__)
                 case "DELETE":
                     match target_type.__name__:
                         case Store.__name__:
                             self.delete_store(target)
                         case Product.__name__:
-                            pass # TODO
+                            pass  # TODO
                 case "UPDATE":
                     match target_type.__name__:
                         case Store.__name__:
-                            self.update_store(target)
+                            ask=input("Do you want to uppdate information of a store or a product in it [info, product]: ")
+                            match ask.lower():
+                                case 'info':
+                                    self.update_store(target, target_type)
+                                case 'product':
+                                    ask=input("Do you want to remove or add product [remove, add]: ")
+                                    match ask:
+                                        case 'remove':
+                                            self.remove_product_from_store(target)
+                                        case 'add':
+                                            self.add_product_to_store(target)
                         case Product.__name__:
-                            pass# TODO
+                            pass # TODO
         else:
             if target_type.__name__ == Store.__name__:
                 self.create_store()
             elif target_type.__name__ == Product.__name__:
                 self.create_product()
-        # TODO: do not implement syncronising
         self.sync()
-
-    def get_store(self):
-        id = input("Enter the id of the store you want to get: ")
-        for i in self.stores:
-            if i.id == id:
-                return i
 
     def create_store(self):
         address = input('Enter the address of the store: ')
         while True:
             capacity = input('Enter the capacity of the store: ')
-            if capacity.isdigit():
-                capacity = int(capacity)
+            if capacity.isdigit() and int(capacity) > 0:
                 break
-        Store(address, capacity)
+        self.stores.append(Store(address, capacity))
 
-    def update_store(self, store):
-        # id = input("Enter the id of the store you want to update: ")
-        if not self.get_store(store.id):
+    def update_store(self, store, store_class):
+        if not store_class.get_by_id(store.id):
             return
         while True:
             change = input(
@@ -101,16 +102,29 @@ class Controller:
                 break
 
     def delete_store(self, store):
-        # id = input("Enter the id of the store you want to delete: ")
         for i, el in enumerate(self.stores):
             if el.id == store.id:
                 del self.stores[i]
 
-    def get_product(self):
-        pass
-
     def create_product(self):
-        pass
+        name = input('Enter the name of the product: ')
+        category = input('Enter the category of the product: ')
+        while True:
+            price = input('Enter the price of the product: ')
+            if price.isdigit() and price > 0:
+                break
+        Product(name,price,category)
 
-    def add_product_to_store(self):
-        pass
+    def add_product_to_store(self, store):
+        product_id=input("ENter the ID of the product you want to add: ")
+        quantity=input("Now, enter the quantity of the product you want to add: ")
+        store.add_product(product_id,quantity)
+
+    def remove_product_from_store(self, store):
+        product_id=input("ENter the ID of the product you want to add: ")
+        ask=input("Do you want to remove the product completely [Yes,No]: ")
+        if ask.lower()=='no':
+            quantity=input("Now, enter the quantity of the product you want to remove: ")
+            store.remove_product(product_id,quantity)
+        else:
+            store.remove_product(product_id,quantity=None)

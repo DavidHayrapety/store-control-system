@@ -10,13 +10,21 @@ class Product:
         self.__price = price
         self.category = category
         if id is None:
-            id = uuid4()
+            id = str(uuid4())
         self._id = id
         Product._instances.append(self)
 
     @property
     def price(self):
         return self.__price
+    
+    @property
+    def name(self):
+        return self.name
+    
+    @property
+    def category(self):
+        return self.category
 
     @price.setter
     def price(self, new_price):
@@ -29,7 +37,7 @@ class Product:
                 return product
 
     @property
-    def info(self):
+    def __str__(self):
         return (     
             f"Name: {self.name}\n"
             f"Price: {self.__price}\n"

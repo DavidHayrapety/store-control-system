@@ -10,7 +10,7 @@ class Store:
         self._capacity = capacity
         self._products = {}
         if id is None:
-            id = uuid4()
+            id = str(uuid4())
         self._id = id
         Store._instances.append(self)
 
@@ -35,20 +35,20 @@ class Store:
     def id(self):
         return self._id
     
-    def add_product(self, product, quantity=1):
+    def add_product(self, product_id, quantity=1):
         if self.free_quantity < quantity:
-            return False
-        current_quatity = self._products.get(product, 0)
-        self._products[product] = current_quatity + quantity
-        return True
+            print("No enough space")
+        current_quatity = self._products.get(product_id, 0)
+        self._products[product_id] = current_quatity + quantity
+        print("Added successfully")
 
-    def remove_product(self, product, quantity=None):
-        if not self._products.get(product):
-            return False
+    def remove_product(self, product_id, quantity=None):
+        if not self._products.get(product_id):
+            print("No such peoduct")
         if quantity is None:
-            quantity = self._products[product]
-        self._products[product] -= quantity
-        return True
+            quantity = self._products[product_id]
+        self._products[product_id] -= quantity
+        print("Removed successfully")
 
     @classmethod
     def get_by_id(cls, id):
