@@ -1,9 +1,10 @@
 from sys import argv
 from store import Controller
 
-archive = argv[1]
+store_archive = argv[1]
+product_archive = argv[2]
 
-ctl = Controller(archive)
+ctrl = Controller(store_archive,product_archive)
 
 while True:
-    ctl.get_command()
+    ctrl.get_command()

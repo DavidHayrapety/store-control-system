@@ -1,16 +1,30 @@
+from uuid import uuid4
+
+
 class Product:
 
     _instances = []
 
     def __init__(self, name, price, category, id=None):
-        self.name = name
+        self._name = name
         self.__price = price
-        self.category = category
+        self._category = category
+        if id is None:
+            id = str(uuid4())
+        self._id = id
         Product._instances.append(self)
 
     @property
     def price(self):
         return self.__price
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def category(self):
+        return self._category
 
     @price.setter
     def price(self, new_price):
@@ -23,5 +37,10 @@ class Product:
                 return product
 
     @property
-    def info(self):
-        pass
+    def __str__(self):
+        return (
+            f"Name: {self._name}\n"
+            f"Price: {self.__price}\n"
+            f"Category: {self.category}\n"
+            f"ID: {self._id}\n"
+        )
