@@ -18,15 +18,15 @@ class Store:
     def free_quantity(self):
         used_quantity = sum(self._products.values())
         return self._capacity - used_quantity
-    
+
     @property
     def instances(self):
         return self._instances
-    
+
     @property
     def address(self):
         return self._address
-    
+
     @property
     def capacity(self):
         return self._capacity
@@ -34,7 +34,7 @@ class Store:
     @property
     def id(self):
         return self._id
-    
+
     def add_product(self, product_id, quantity=1):
         if self.free_quantity < quantity:
             print("No enough space")
@@ -58,8 +58,8 @@ class Store:
 
     @property
     def __str__(self):
-        return (     
+        return (
             f"Address: {self._address}\n"
             f"Capacity: {self._capacity}\n"
             f"ID: {self._id}\n"
-            )
+        )
